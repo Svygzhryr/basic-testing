@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { throttledGetDataFromApi } from './index';
 
 describe('throttledGetDataFromApi', () => {
@@ -6,13 +6,11 @@ describe('throttledGetDataFromApi', () => {
     jest.mock('axios');
     const arg = { baseURL: 'https://jsonplaceholder.typicode.com' };
     const instance = jest.spyOn(axios, 'create');
-    throttledGetDataFromApi('1');
+    await throttledGetDataFromApi('1');
     expect(instance).toHaveBeenLastCalledWith(arg);
   });
 
   test('should perform request to correct provided url', async () => {
-    jest.mock('axios');
-    const arg = { baseURL: 'https://jsonplaceholder.typicode.com' };
     const mockedAxios = axios as jest.Mocked<typeof axios>;
     mockedAxios.get.mockResolvedValue({
       data: {
@@ -20,6 +18,8 @@ describe('throttledGetDataFromApi', () => {
       },
       status: 200,
     });
+    const result = await throttledGetDataFromApi('here');
+    expect(result).toBe(1);
   });
 
   test('should return response data', async () => {

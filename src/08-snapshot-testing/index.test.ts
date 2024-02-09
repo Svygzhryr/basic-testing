@@ -5,12 +5,15 @@ describe('generateLinkedList', () => {
     const emptyList = generateLinkedList([]);
     expect(emptyList).toStrictEqual({ next: null, value: null });
 
-    const filledList = generateLinkedList([]);
-    expect(filledList).toStrictEqual({ next: null, value: null });
+    const filledList = generateLinkedList([1]);
+    expect(filledList).toStrictEqual({
+      value: 1,
+      next: { value: null, next: null },
+    });
   });
 
-  // Check match by comparison with snapshot
   test('should generate linked list from values 2', () => {
-    // Write your test here
+    const emptyList = generateLinkedList([1, 2, 3]);
+    expect(emptyList).toMatchSnapshot();
   });
 });
